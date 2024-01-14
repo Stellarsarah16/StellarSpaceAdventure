@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,8 @@ using UnityEngine;
 public class Bullet : MonoBehaviour {
 
     private Camera _camera;
+
+    public event EventHandler BulletHit;
 
     [SerializeField]
     private float _damage = 5;
@@ -20,6 +23,7 @@ public class Bullet : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D collision) {
 
         if(collision.gameObject.layer == 7) {
+            // add new BulletHit event stuff here
             Destroy(gameObject);
             if (collision.GetComponent<EnemyMovement>()) {
                 Destroy(collision.gameObject);

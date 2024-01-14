@@ -2,9 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-public class GameEvents : MonoBehaviour {
+public class GameEvent : MonoBehaviour {
 
     public event EventHandler HaulButtonPressed;
     public event EventHandler HaulButtonReleased;
@@ -17,5 +16,4 @@ public class GameEvents : MonoBehaviour {
             HaulButtonReleased?.Invoke(this, EventArgs.Empty);
         }
     }
-        
 }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5696382817525401856}
   - component: {fileID: 715856136606059303}
   - component: {fileID: 3418686460894602334}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: WallShortH
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5677238298705867552}
   - component: {fileID: 3004921986239495840}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: brick (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,7 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 256834470888210107}
   - component: {fileID: 6099711172682705090}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: brick (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -262,7 +262,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8868855012967986701}
   - component: {fileID: 2602593357190786983}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: brick (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -346,7 +346,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1929300886475496647}
   - component: {fileID: 3525250853363971873}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: brick (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

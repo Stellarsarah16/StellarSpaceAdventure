@@ -1,9 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class HealthController : MonoBehaviour {
+
+    public event EventHandler OnTakeDamage;
+    public event EventHandler OnDamaged;
+    public event EventHandler OnReceiveHealth;
+    public event EventHandler OnDeath;
+
 
     [SerializeField]
     private float _currentHealth;
@@ -15,12 +21,6 @@ public class HealthController : MonoBehaviour {
     }
     public bool IsInvincible { get; set; }
 
-    public UnityEvent OnDied;
-
-    public UnityEvent OnDamaged;
-
-    public UnityEvent OnHealthChanged;
-
     public void TakeDamage(float damageAmount) {
 
         if (IsInvincible) {
@@ -29,15 +29,15 @@ public class HealthController : MonoBehaviour {
 
         _currentHealth -= damageAmount;
 
-        OnHealthChanged.Invoke();
+        OnTakeDamage.Invoke(this, EventArgs.Empty);
 
         if (_currentHealth < 0) {
             _currentHealth = 0;
         }
         if (_currentHealth == 0) {
-            OnDied.Invoke();
+            OnDeath?.Invoke(this, EventArgs.Empty);
         } else {
-            OnDamaged.Invoke();
+            OnDamaged.Invoke(this, EventArgs.Empty);
         }
     }
 
@@ -46,7 +46,7 @@ public class HealthController : MonoBehaviour {
             return;
         }
         _currentHealth += amountToAdd;
-        OnHealthChanged.Invoke();
+        OnReceiveHealth.Invoke(this, EventArgs.Empty);
         if (_currentHealth > _maximumHealth) {
             _currentHealth = _maximumHealth;
         }

@@ -6,35 +6,52 @@ using UnityEngine;
 public class Cargo : MonoBehaviour{
 
     [SerializeField] private GameObject gameEventObject;
-    [SerializeField] private GameObject _player;
-    [SerializeField] private GameObject _anchor;
-
-    private HingeJoint2D _joint;
-
+    [SerializeField] private GameObject interact;
+    [SerializeField] private GameObject rope;
+    
+    private HingeJoint2D joint;
     private bool canConnect;
     private bool isConnected;
 
+
     void Start () {
-
-        // Haul Events
         // subscriber for Keypress
-        GameEvents gameEvents = gameEventObject.GetComponent<GameEvents>();
-        gameEvents.HaulButtonPressed += GameEvents_HaulButtonPressed;
-        //subscriber for Haul Range
-        HaulCargo haulCargo = gameEventObject.GetComponent<HaulCargo>();
-        Debug.Log(gameEventObject);
-        
+        GameEvent gameEvent = gameEventObject.AddComponent<GameEvent>();
+        gameEvent.HaulButtonPressed += GameEvent_HaulButtonPressed;
 
-        _joint = GetComponent<HingeJoint2D>();
+        //subscriber for Haul Range
+        DetectCargo detectCargo = interact.GetComponent<DetectCargo>();
+        detectCargo.EnterHaulRange += DetectCargo_EnterHaulRange;
+        detectCargo.ExitHaulRange += DetectCargo_ExitHaulRange;
+     
+        joint = GetComponent<HingeJoint2D>();
     }
 
-    private void GameEvents_HaulButtonPressed(object sender, EventArgs e) {
-        
-        Debug.Log("haulButtonPressed");
-
-        if (canConnect) {
-            Debug.Log("connected");
+    private void GameEvent_HaulButtonPressed(object sender, EventArgs e) {
+        if(!isConnected) {
+            if (canConnect) {
+                isConnected = true;
+                Debug.Log(isConnected);
+                rope.active = true;
+                joint.enabled = true;
+            }
+        } else {
+            isConnected = false;
+            Debug.Log(isConnected);
+            joint.enabled = false;
+            rope.active = false;
         }
+
+    }
+
+    private void DetectCargo_ExitHaulRange(object sender, EventArgs e) {
+        Debug.Log("Exit");
+        canConnect = false;
+    }
+
+    private void DetectCargo_EnterHaulRange(object sender, EventArgs e) {
+        Debug.Log("Enter");
+        canConnect = true;
     }
 
     public void StartHaul(bool isConnected) {
