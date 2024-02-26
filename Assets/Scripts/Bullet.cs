@@ -1,7 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class Bullet : MonoBehaviour {
 
@@ -10,7 +13,8 @@ public class Bullet : MonoBehaviour {
     public event EventHandler BulletHit;
 
     [SerializeField]
-    private float _damage = 5;
+    private int damage = 2;
+    private float pushForce = 100f;
 
     private void Awake() {
         _camera = Camera.main;
@@ -22,27 +26,36 @@ public class Bullet : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision) {
 
-        if(collision.gameObject.layer == 7) {
+        if(collision.gameObject.layer == 7 || collision.gameObject.layer == 8) {
             // add new BulletHit event stuff here
             Destroy(gameObject);
-            if (collision.GetComponent<EnemyMovement>()) {
-                Destroy(collision.gameObject);
-            }
+  
             if (collision.GetComponent<Meteor>()) {
                 Destroy(collision.gameObject);
             }
+            if (collision.gameObject.tag == "Enemy") {
+                collision.gameObject.GetComponent<Spitter>().TakeDamage(damage);
+            }
+            if (collision.gameObject.tag == "Cargo") {
+                Vector2 PushDirection = transform.position - collision.transform.position;
+                collision.attachedRigidbody.AddForce(transform.up * pushForce);
+            }
+            if (collision.CompareTag("Breakable")) {
+                Destroy(collision.gameObject);
+            }
+            
+            BulletHit?.Invoke(this, EventArgs.Empty); 
         }
     }
 
     private void DestroyWhenOffscreen() {
         Vector2 screenPosition = _camera.WorldToScreenPoint(transform.position);
 
-        if (screenPosition.x < 0 ||
-            screenPosition.x > _camera.pixelWidth ||
-            screenPosition.y < 0 ||
-            screenPosition.y > _camera.pixelHeight) {
+        if (screenPosition.x < -50 ||
+            screenPosition.x > _camera.pixelWidth + 50 ||
+            screenPosition.y < -50 ||
+            screenPosition.y > _camera.pixelHeight + 50) {
             Destroy(gameObject);
         }
     }
-
 }

@@ -12,9 +12,6 @@ GameObject:
   - component: {fileID: 4546511780041480029}
   - component: {fileID: 1447496292657571062}
   - component: {fileID: 9064474822789296520}
-  - component: {fileID: 9202155197382209393}
-  - component: {fileID: 4452030601395385278}
-  - component: {fileID: 1247696474447721680}
   m_Layer: 0
   m_Name: EnemyShip
   m_TagString: Untagged
@@ -126,43 +123,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &9202155197382209393
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2994988752547105661}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6abbd15c0e997445ab38de9f0fd6fbc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _speed: 3
-  _rotationSpeed: 100
---- !u!114 &4452030601395385278
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2994988752547105661}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2a5f55f808aa694aaee9f0167162e7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _damageAmount: 4
---- !u!114 &1247696474447721680
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2994988752547105661}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a78bdcfdf2f4a343a2530862ce74091, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playerAwarenessDistance: 30

@@ -6,49 +6,48 @@ using UnityEngine;
 public class HealthController : MonoBehaviour {
 
     public event EventHandler OnTakeDamage;
-    public event EventHandler OnDamaged;
     public event EventHandler OnReceiveHealth;
     public event EventHandler OnDeath;
 
-
-    [SerializeField]
-    private float _currentHealth;
-    [SerializeField]
-    private float _maximumHealth;
-
-    public float RemainingHealthPercentage {
-        get { return _currentHealth / _maximumHealth; }
+    
+    [SerializeField] private int health, maxHealth;
+    
+    public HealthController(int maxHealth) {
+        this.maxHealth = maxHealth;
+        health = maxHealth;
     }
+
+    public int RemainingHealthPercentage {
+        get { return health /maxHealth; }
+    }
+
+    public int GetHealth() { return health; }
+    
     public bool IsInvincible { get; set; }
 
-    public void TakeDamage(float damageAmount) {
+    
+    public void TakeDamage(int damageAmount) {
 
-        if (IsInvincible) {
-            return;
-        }
+        if (IsInvincible)  return;  
 
-        _currentHealth -= damageAmount;
+        health -= damageAmount;
 
-        OnTakeDamage.Invoke(this, EventArgs.Empty);
-
-        if (_currentHealth < 0) {
-            _currentHealth = 0;
-        }
-        if (_currentHealth == 0) {
+        if (health < 0) health = 0;
+        if (health == 0) {
             OnDeath?.Invoke(this, EventArgs.Empty);
         } else {
-            OnDamaged.Invoke(this, EventArgs.Empty);
+            OnTakeDamage.Invoke(this, EventArgs.Empty);
         }
     }
 
-    public void AddHealth(float amountToAdd) {
-        if (_currentHealth == _maximumHealth) { 
+    public void AddHealth(int amountToAdd) {
+        if (health == maxHealth) { 
             return;
         }
-        _currentHealth += amountToAdd;
+        health += amountToAdd;
         OnReceiveHealth.Invoke(this, EventArgs.Empty);
-        if (_currentHealth > _maximumHealth) {
-            _currentHealth = _maximumHealth;
+        if (health > maxHealth) {
+            health = maxHealth;
         }
     }
 }

@@ -3,21 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerShoot : MonoBehaviour { 
+public class PlayerShoot : MonoBehaviour {
 
+    [SerializeField]
+    private GameInput gameInput;
     [SerializeField]
     private GameObject _bullletPrefab;
     [SerializeField]
     private Transform _gunOffset;
     [SerializeField]
-    private float _bulletSpeed;
-    [SerializeField]
-    private float _timeBetweenShots;
+    private float _bulletSpeed, _timeBetweenShots;
     private float _lastFireTime;
 
-    private bool _fireContinuously;
-    private bool _fireSingle;
-    
+    private bool _fireContinuously, _fireSingle;
+
+    void Start() {
+        gameInput.FireButtonPressed += GameInput_FireButtonPressed;
+    }
+
+    private void GameInput_FireButtonPressed(object sender, System.EventArgs e) {
+        _fireSingle = true;
+    }
+
     void Update()
     {
         if (_fireContinuously || _fireSingle) {
@@ -38,11 +45,4 @@ public class PlayerShoot : MonoBehaviour {
         rigidbody.velocity = _bulletSpeed * transform.up;
     }
 
-    private void OnFire(InputValue inputValue){
-        _fireContinuously = inputValue.isPressed;
-
-        if(inputValue.isPressed) {
-            _fireSingle = true;
-        }
-    }
 }

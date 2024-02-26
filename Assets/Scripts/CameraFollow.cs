@@ -4,17 +4,28 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour {
 
-    public GameObject target;
-    public float depth = -10;
     [SerializeField]
-    private float smoothingTime = 0.3f;
+    public Transform player;
+    [SerializeField]
+    private float smoothingTime = 0.2f, zPosition = -10;
     private Vector3 velocity = Vector3.zero;
 
 
     private void Update() {
-        if (target != null) {
-            Vector2 delta = transform.position - target.transform.position;
-            transform.position = Vector3.SmoothDamp(transform.position, delta, ref velocity, smoothingTime);
+        if (player != null) {
+
+            Vector3 targetPos = new Vector3 (player.position.x, player.position.y, -10);
+            //Vector2 delta = targetPos - transform.position;
+
+            //Camera Position
+            //transform.position = new Vector3(player.position.x, player.position.y, zPosition);
+            transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref velocity, smoothingTime);
+
+            // Camera Rotation
+            // Quaternion rotation = transform.rotation * player.rotation;
+            // transform.Rotate(player.eulerAngles, 10.0f * Time.deltaTime);
+
+
         }
     }
 }
